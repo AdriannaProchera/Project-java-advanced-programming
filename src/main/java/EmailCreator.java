@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EmailCreator {
+    public static final String TEMPORARY_FILE = "/Users/adrianna/Documents/Poject_java_advanced_programming/src/main/resources/"+"tmp.txt";
+    public static final String EMAIL_FILE_PATH = "/Users/adrianna/Documents/Poject_java_advanced_programming/src/main/resources/";
+    public static final String PATH_WOMAN = "/Users/adrianna/Documents/Poject_java_advanced_programming/src/main/resources/patternWoman.txt";
+    public static final String PATH_MAN = "/Users/adrianna/Documents/Poject_java_advanced_programming/src/main/resources/patternMan.txt";
 
     public static BufferedReader bufferedReader;
     public static BufferedWriter bufferedWriter2;
@@ -15,14 +19,7 @@ public class EmailCreator {
             String str;
             bufferedReader = new BufferedReader(new FileReader(filename));
             while((str = bufferedReader.readLine()) != null) {
-                String[] tab = str.split(", ");
-                Person.Email email = new Person.Email(tab[0]);
-                String personName = tab[1];
-                String genderString = tab[2];
-                double amount = Double.parseDouble(tab[3]);
-                char genderChar = genderString.charAt(0);
-                LocalDate deadline = LocalDate.parse(tab[4]);
-                Person person = new Person(email, personName, genderChar, amount, deadline);
+                Person person = Person.parse(str);
                 System.out.println(person);
                 people.add(person);
             }
@@ -37,18 +34,16 @@ public class EmailCreator {
 
     public void fileCreator(List<Person> people) throws IOException {
         for(Person element : people){
-
-            String tmpNewFilePath = "/Users/adrianna/Documents/Poject_java_advanced_programming/src/main/java/"+"tmp.txt";
-            String newFilePath = "/Users/adrianna/Documents/Poject_java_advanced_programming/src/main/java/" +element.getEmail()+".txt";
+            String newFilePath = EMAIL_FILE_PATH + element.getEmail()+".txt";
             FileInputStream instream = null;
             FileOutputStream outstream = null;
             File infile;
-            File outfile =new File(tmpNewFilePath);
+            File outfile =new File(TEMPORARY_FILE);
             if(element.getGender() =='K'){
-                infile =new File("/Users/adrianna/Documents/Poject_java_advanced_programming/src/main/java/patternWoman.txt");
+                infile =new File(PATH_WOMAN);
 
             }else{
-                infile =new File("/Users/adrianna/Documents/Poject_java_advanced_programming/src/main/java/patternMan.txt");
+                infile =new File(PATH_MAN);
             }
             instream = new FileInputStream(infile);
             outstream = new FileOutputStream(outfile);
@@ -60,7 +55,7 @@ public class EmailCreator {
             instream.close();
             outstream.close();
 
-            bufferedReader2 = new BufferedReader(new FileReader(tmpNewFilePath));
+            bufferedReader2 = new BufferedReader(new FileReader(TEMPORARY_FILE));
             bufferedWriter2 = new BufferedWriter(new FileWriter(newFilePath));
             String str;
             while ((str = bufferedReader2.readLine()) != null){

@@ -10,28 +10,38 @@ public class Person {
     private final double amount;
     private final LocalDate deadline;
 
-
-    public Person(Email email, String nameAndSurname, char gender, double amount, LocalDate deadline) {
-
+    private Person(Email email, String nameAndSurname, char gender, double amount, LocalDate deadline) {
         this.email = email;
+        this.nameAndSurname = nameAndSurname;
+        this.gender = gender;
+        this.amount = amount;
+        this.deadline = deadline;
+    }
 
+    public static Person of(Email email, String nameAndSurname, char gender, double amount, LocalDate deadline){
         if(nameAndSurname.isEmpty()){
             throw new InvalidNameAndSurname();
         }
-        this.nameAndSurname = nameAndSurname;
-
         if(gender != 'K' && gender != 'M'){
             throw new InvalidGender();
         }
-        this.gender = gender;
-
         if(amount <= 0){
             throw new InvalidAmount();
         }
-        this.amount = amount;
-
-        this.deadline = deadline;
+        return new Person(email, nameAndSurname, gender,  amount, deadline);
     }
+
+    public static Person parse(String input){
+        String[] tab = input.split(", ");
+        Person.Email email = new Person.Email(tab[0]);
+        String personName = tab[1];
+        String genderString = tab[2];
+        double amount = Double.parseDouble(tab[3]);
+        char genderChar = genderString.charAt(0);
+        LocalDate deadline = LocalDate.parse(tab[4]);
+        return new Person(email, personName, genderChar, amount, deadline);
+    }
+
 
     public Email getEmail() {
         return email;
@@ -72,7 +82,6 @@ public class Person {
 
         public Email(String email){
             if(email.isEmpty() || !validate(email)){
-                //this.email = "unknown";
                 throw new InvalidEmail();
             }else {
                 this.email = email;
