@@ -1,3 +1,5 @@
+package App;
+
 import java.io.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -38,12 +40,12 @@ public class EmailCreator {
             FileInputStream instream = null;
             FileOutputStream outstream = null;
             File infile;
-            File outfile =new File(TEMPORARY_FILE);
+            File outfile = new File(TEMPORARY_FILE);
             if(element.getGender() =='K'){
-                infile =new File(PATH_WOMAN);
+                infile = new File(PATH_WOMAN);
 
             }else{
-                infile =new File(PATH_MAN);
+                infile = new File(PATH_MAN);
             }
             instream = new FileInputStream(infile);
             outstream = new FileOutputStream(outfile);

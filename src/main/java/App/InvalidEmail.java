@@ -1,5 +1,7 @@
+package App;
+
 public class InvalidEmail extends RuntimeException{
         public  InvalidEmail(){
-            super("InvalidEmail exception.Nie wlasciwy format e-mail!");
+            super("App.InvalidEmail exception.Nie wlasciwy format e-mail!");
         }
 }

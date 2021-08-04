@@ -1,3 +1,5 @@
+package App;
+
 import java.time.LocalDate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -65,7 +67,7 @@ public class Person {
 
     @Override
     public String toString() {
-        return "Person{" +
+        return "App.Person{" +
                 "email=" + email +
                 ", nameAndSurname='" + nameAndSurname + '\'' +
                 ", gender=" + gender +
